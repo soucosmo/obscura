@@ -1,6 +1,6 @@
-use fjall::{Config, PersistMode, Keyspace, PartitionCreateOptions};
-use actix_web::{get, web, App, HttpServer,};
+use actix_web::{web, App, HttpServer};
 use std::sync::Arc;
+use fjall::Config;
 mod repositories;
 mod services;
 mod http;
@@ -8,7 +8,7 @@ mod dao;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let keyspace = Arc::new(Config::new(dao::config::DEFAULT_KEYSPACE).open().unwrap());
+    let keyspace = Arc::new(Config::new(dao::config::DEFAULT_KEYSPACE).open().expect("keyspace load"));
 
     let partitions = services::load_partitions(keyspace.clone());
 
