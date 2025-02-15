@@ -20,7 +20,7 @@ pub async fn read(path: Path<String>, app_state: Data<AppState>) -> impl Respond
 
     let config_path = config_path.unwrap();
 
-    let read = app_state.partitions.configs.get(
+    let read = app_state.partitions.config_maps.get(
         config_path.as_str()
     );
 
