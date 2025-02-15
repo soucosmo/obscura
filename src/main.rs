@@ -29,9 +29,9 @@ async fn main() -> std::io::Result<()> {
             .service(
                 web::scope(dao::config::PREFIX_API)
                     .service(http::ping::ping)
-                    .service(http::config::read::read)
-                    .service(http::config::write::write)
-                    .service(http::config::remove::remove)
+                    .service(http::config_map::read::read)
+                    .service(http::config_map::write::write)
+                    .service(http::config_map::remove::remove)
                     .service(http::token::root_generate::root_generate)
             )
     })
