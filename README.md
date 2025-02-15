@@ -38,4 +38,7 @@ The correct pronunciation of **Obscura** is:
 
 ```sh
 git clone https://github.com/soucosmo/obscura.git
+
 cd obscura
+
+cargo run
