@@ -1,4 +1,4 @@
-pub const PARTITION_CONFIGS: &str = "configs";
+pub const PARTITION_CONFIG_MAPS: &str = "config_maps";
 pub const PARTITION_TOKENS: &str = "tokens";
 pub const PARTITION_CORE: &str = "core";
 
