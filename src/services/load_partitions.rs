@@ -6,7 +6,7 @@ use std::sync::Arc;
 pub fn load_partitions(keyspace: Arc<Keyspace>) -> Partitions {
     Partitions {
         core: load_partition(keyspace.clone(), config::PARTITION_CORE),
-        configs: load_partition(keyspace.clone(), config::PARTITION_CONFIGS),
+        config_maps: load_partition(keyspace.clone(), config::PARTITION_CONFIG_MAPS),
         tokens: load_partition(keyspace.clone(), config::PARTITION_TOKENS),
     }
 }

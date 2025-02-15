@@ -1,7 +1,7 @@
 use fjall::PartitionHandle;
 
 pub struct Partitions {
-    pub configs: PartitionHandle,
+    pub config_maps: PartitionHandle,
     pub tokens: PartitionHandle,
     pub core: PartitionHandle,
 }
