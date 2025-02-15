@@ -33,7 +33,7 @@ pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppSta
 
     let body = serde_json::to_vec(&config_map).unwrap();
 
-    let res = app_state.partitions.configs.insert(
+    let res = app_state.partitions.config_maps.insert(
         config_path.as_str(),
         body
     );
