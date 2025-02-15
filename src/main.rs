@@ -31,6 +31,7 @@ async fn main() -> std::io::Result<()> {
                     .service(http::ping::ping)
                     .service(http::config::read::read)
                     .service(http::config::write::write)
+                    .service(http::config::remove::remove)
                     .service(http::token::root_generate::root_generate)
             )
     })

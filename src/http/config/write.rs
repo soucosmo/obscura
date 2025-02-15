@@ -13,7 +13,7 @@ use actix_web::{
     },
 };
 
-#[put("/config/{path:.*}")]
+#[put("/config-map/{path:.*}")]
 pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>) -> impl Responder {
     let config_path = path_sanitize(path);
 
