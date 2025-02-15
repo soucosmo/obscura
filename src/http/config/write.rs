@@ -1,5 +1,6 @@
-use crate::dao::AppState;
+use crate::dao::{AppState, ConfigMap};
 use serde_json::Value;
+use chrono::Utc;
 use actix_web::{
     HttpResponse,
     Responder,
@@ -13,14 +14,20 @@ use actix_web::{
 
 
 #[put("/config/{path:.*}")]
-pub async fn config_write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>) -> impl Responder {
+pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>) -> impl Responder {
     let config_path = path.into_inner();
 
     let config_path = config_path.replace("/", ".");
     
     let body = body.into_inner();
 
-    let body = serde_json::to_vec(&body).unwrap();
+    let config_map = ConfigMap {
+        content: body,
+        created_at: Utc::now().naive_utc(),
+        updated_at: Utc::now().naive_utc(),
+    };
+
+    let body = serde_json::to_vec(&config_map).unwrap();
 
     let res = app_state.partitions.configs.insert(
         config_path.as_str(),

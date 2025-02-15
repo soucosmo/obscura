@@ -29,8 +29,9 @@ async fn main() -> std::io::Result<()> {
             .service(
                 web::scope(dao::config::PREFIX_API)
                     .service(http::ping::ping)
-                    .service(http::config_read::config_read)
-                    .service(http::config_write::config_write)
+                    .service(http::config::read::read)
+                    .service(http::config::write::write)
+                    .service(http::token::root_generate::root_generate)
             )
     })
     .bind((dao::config::DEFAULT_HOST, dao::config::DEFAULT_PORT))?

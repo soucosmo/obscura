@@ -11,7 +11,7 @@ use actix_web::{
 };
 
 #[get("/config/{path:.*}")]
-pub async fn config_read(path: Path<String>, app_state: Data<AppState>) -> impl Responder {
+pub async fn read(path: Path<String>, app_state: Data<AppState>) -> impl Responder {
     let config_path = path.into_inner();
 
     let config_path = config_path.replace("/", ".");
