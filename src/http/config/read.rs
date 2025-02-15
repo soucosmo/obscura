@@ -1,5 +1,5 @@
-use crate::dao::AppState;
-use serde_json::Value;
+use crate::dao::{AppState, ConfigMap};
+use crate::services::path_sanitize;
 use actix_web::{
     HttpResponse,
     Responder,
@@ -12,9 +12,13 @@ use actix_web::{
 
 #[get("/config/{path:.*}")]
 pub async fn read(path: Path<String>, app_state: Data<AppState>) -> impl Responder {
-    let config_path = path.into_inner();
+    let config_path = path_sanitize(path);
 
-    let config_path = config_path.replace("/", ".");
+    if let Err(e) = config_path {
+        return HttpResponse::BadRequest().body(e);
+    }
+
+    let config_path = config_path.unwrap();
 
     let read = app_state.partitions.configs.get(
         config_path.as_str()
@@ -24,7 +28,7 @@ pub async fn read(path: Path<String>, app_state: Data<AppState>) -> impl Respond
         Ok(res) if res.is_some() => {
             let res = res.unwrap();
 
-            let res: Value = serde_json::from_slice(&res).unwrap();
+            let res: ConfigMap = serde_json::from_slice(&res).unwrap();
 
             HttpResponse::Ok().json(res)           
         },

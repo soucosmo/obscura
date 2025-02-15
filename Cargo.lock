@@ -1102,6 +1102,7 @@ dependencies = [
  "actix-web",
  "chrono",
  "fjall",
+ "regex",
  "serde",
  "serde_json",
  "uuid",

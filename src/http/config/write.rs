@@ -1,4 +1,5 @@
 use crate::dao::{AppState, ConfigMap};
+use crate::services::path_sanitize;
 use serde_json::Value;
 use chrono::Utc;
 use actix_web::{
@@ -12,12 +13,15 @@ use actix_web::{
     },
 };
 
-
 #[put("/config/{path:.*}")]
 pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>) -> impl Responder {
-    let config_path = path.into_inner();
+    let config_path = path_sanitize(path);
 
-    let config_path = config_path.replace("/", ".");
+    if let Err(e) = config_path {
+        return HttpResponse::BadRequest().body(e);
+    }
+
+    let config_path = config_path.unwrap();
     
     let body = body.into_inner();
 
