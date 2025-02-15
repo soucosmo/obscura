@@ -29,6 +29,7 @@ async fn main() -> std::io::Result<()> {
             .service(
                 web::scope(dao::config::PREFIX_API)
                     .service(http::ping::ping)
+                    .service(http::config_map::read_prefix::read_prefix)
                     .service(http::config_map::read::read)
                     .service(http::config_map::write::write)
                     .service(http::config_map::remove::remove)

@@ -20,7 +20,7 @@ pub async fn remove(path: Path<String>, app_state: Data<AppState>) -> impl Respo
 
     let config_path = config_path.unwrap();
 
-    let read = app_state.partitions.configs.remove(
+    let read = app_state.partitions.config_maps.remove(
         config_path.as_str()
     );
 
