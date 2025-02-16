@@ -4,6 +4,7 @@ use fjall::Config;
 mod repositories;
 mod services;
 mod http;
+mod dto;
 mod dao;
 
 #[actix_web::main]
@@ -34,6 +35,7 @@ async fn main() -> std::io::Result<()> {
                     .service(http::config_map::write::write)
                     .service(http::config_map::remove::remove)
                     .service(http::token::root_generate::root_generate)
+                    .service(http::token::write::write)
             )
     })
     .bind((dao::config::DEFAULT_HOST, dao::config::DEFAULT_PORT))?

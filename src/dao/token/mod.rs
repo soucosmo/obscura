@@ -1,15 +1,16 @@
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
 use chrono::NaiveDateTime;
-pub use path::Path;
+mod paths;
 mod path;
 
+pub use paths::Paths;
+pub use path::Path;
 
 #[derive(Serialize, Deserialize)]
 pub struct Token {
     pub description: String,
     pub is_root: bool,
-    pub paths: BTreeMap<String, path::Path>,
+    pub paths: Paths,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
