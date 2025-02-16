@@ -1,8 +1,13 @@
+
 use crate::dao::{AppState, Token, Path};
+use std::collections::BTreeMap;
 use chrono::Utc;
 use uuid::Uuid;
 use actix_web::{
-    post, web::Data, HttpResponse, Responder
+    web::Data,
+    HttpResponse,
+    Responder,
+    post,
 };
 
 
@@ -23,12 +28,9 @@ pub async fn root_generate(app_state: Data<AppState>) -> impl Responder {
             .body("the root token has already been created previously");
     }
 
-    let paths = vec![
-        Path {
-            prefix: "/".to_string(),
-            write: true,
-        }
-    ];
+    let paths = BTreeMap::from([
+        ("/".to_string(), Path { write: true })
+    ]);
 
     let btoken = Token {
         description: "root".to_string(),
