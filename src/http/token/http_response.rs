@@ -17,7 +17,7 @@ pub async fn http_response(path: &str, write: bool, app_state: &Data<AppState>, 
             let token = token.unwrap();
 
             if token.is_none() {
-                return Err(HttpResponse::Forbidden().finish());
+                return Err(HttpResponse::Forbidden().body("token is none"));
             }
 
             let token = token.unwrap();
@@ -32,6 +32,6 @@ pub async fn http_response(path: &str, write: bool, app_state: &Data<AppState>, 
         }
     }
 
-    Err(HttpResponse::Forbidden().finish())
+    Err(HttpResponse::Forbidden().body("no auth header"))
 
 }
