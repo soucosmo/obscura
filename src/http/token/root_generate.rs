@@ -28,20 +28,16 @@ pub async fn root_generate(app_state: Data<AppState>) -> impl Responder {
             .body("the root token has already been created previously");
     }
 
-    let paths = BTreeMap::from([
-        ("/".to_string(), Path { write: true })
-    ]);
-
     let btoken = Token {
         description: "root".to_string(),
         is_root: true,
-        paths: paths,
+        paths: BTreeMap::new(),
         created_at: Utc::now().naive_utc(),
         updated_at: Utc::now().naive_utc(),
     };
 
     let res = app_state.partitions.tokens.insert(
-        "root",
+        uuid_token.clone().to_string(),
         serde_json::to_vec(&btoken).unwrap(),
     );
 
