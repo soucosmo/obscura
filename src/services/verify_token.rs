@@ -8,8 +8,8 @@ pub async fn verify_token(token: &Token, path: &str, write: bool) -> VerifyToken
     }
 
     for (key, vpath) in &token.paths {
-        dbg!(&key);
         dbg!(&path);
+        dbg!(&key);
         if path.starts_with(key) {
             if write && !vpath.write{
                 dbg!("Forbidden 1");
