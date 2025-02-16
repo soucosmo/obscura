@@ -8,6 +8,8 @@ pub async fn http_response(path: &str, write: bool, app_state: &Data<AppState>, 
             let token = token.replace("Bearer ", "");
             let token = token.trim();
 
+            dbg!(&token);
+
             let token = app_state.partitions.tokens.get(token);
 
             if let Err(e) = token {
@@ -17,7 +19,7 @@ pub async fn http_response(path: &str, write: bool, app_state: &Data<AppState>, 
             let token = token.unwrap();
 
             if token.is_none() {
-                return Err(HttpResponse::Forbidden().body("token is none"));
+                return Err(HttpResponse::Forbidden().body("token not found"));
             }
 
             let token = token.unwrap();
