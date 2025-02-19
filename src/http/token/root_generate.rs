@@ -1,5 +1,5 @@
 
-use crate::dao::{AppState, Token, Path};
+use crate::dao::{AppState, Token};
 use std::collections::BTreeMap;
 use chrono::Utc;
 use uuid::Uuid;
