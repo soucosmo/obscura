@@ -37,6 +37,7 @@ async fn main() -> std::io::Result<()> {
                     .service(http::config_map::write::write)
                     .service(http::config_map::remove::remove)
                     .service(http::token::root_exists::root_exists)
+                    .service(http::token::read::read)
                     .service(http::token::root_generate::root_generate)
                     .service(http::token::write::write)
             )
