@@ -1,27 +1,50 @@
-import { useState } from 'react'
 import './App.css'
 import { Navbar } from './components/navbar'
+import { SomethingWentWrong } from './components/something-went-wrong'
 import { RootGenerateToken } from './components/root-generate-token'
-import { useObscuraStore } from './utils/obscura-store'
+import { RootViewToken } from './components/root-view-token'
+import { useAuthStore } from './utils/auth-store'
+
 
 function App() {
-    const obscura = useObscuraStore()
+    const {
+        checkRootTokenExists,
+        rootTokenExists,
+        token,
+        login,
+        generateRootToken,
+        ready,
+        isAuthenticated,
+    } = useAuthStore()
 
-    obscura.checkToken()
-
-    // const handleTokenChange = (e: any) => {
-    //     setToken(e.target.value)
-    // }
-
-    if (obscura.rootTokenExists === false) {
-        return RootGenerateToken()
+    if (isAuthenticated) {
+        return (
+            <>
+            <Navbar />
+            </>
+        )
     }
 
-    return (
-        <>
-        <Navbar />
-        </>
-    )
+    if (rootTokenExists === undefined) {
+        checkRootTokenExists()
+    }
+
+    console.log('root app', rootTokenExists)
+
+    if (rootTokenExists == true && !ready) {
+        return RootViewToken(
+            token,
+            (token) => login(token),
+        );
+    }
+
+    if (rootTokenExists == false && !ready) {
+        return RootGenerateToken(
+            generateRootToken
+        );
+    }
+
+    return SomethingWentWrong()
 }
 
 export default App

@@ -1,4 +1,8 @@
+import { useAuthStore } from "../utils/auth-store"
+
+
 export const Navbar = () => {
+    const auth = useAuthStore()
 
     return (
         <div className="navbar bg-base-100">
@@ -34,7 +38,7 @@ export const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn text-red-100">Disconnect</a>
+                <a className="btn text-red-100" onClick={auth.logout}>Disconnect</a>
             </div>
         </div>
     )
