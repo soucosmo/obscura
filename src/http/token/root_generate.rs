@@ -42,7 +42,7 @@ pub async fn root_generate(app_state: Data<AppState>) -> impl Responder {
     );
 
     match res {
-        Ok(_) => HttpResponse::Ok().body(uuid_token.to_string()),
+        Ok(_) => HttpResponse::Created().body(uuid_token.to_string()),
         Err(e) => {
             HttpResponse::InternalServerError().body(e.to_string())
         }
