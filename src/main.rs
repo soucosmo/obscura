@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpServer};
+use actix_cors::Cors;
 use std::sync::Arc;
 use fjall::Config;
 mod repositories;
@@ -26,6 +27,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
+            .wrap(Cors::permissive())
             .app_data(app_state.clone())
             .service(
                 web::scope(dao::config::PREFIX_API)

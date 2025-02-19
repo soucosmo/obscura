@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+actix-cors = "0.7.0"
 actix-web = "4.9.0"
 chrono = { version = "0.4.39", features = ["serde"] }
 fjall = "2.6.3"
