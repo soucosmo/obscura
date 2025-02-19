@@ -1,15 +1,27 @@
 import { useState } from 'react'
 import './App.css'
 import { Navbar } from './components/navbar'
+import { RootGenerateToken } from './components/root-generate-token'
+import { useObscuraStore } from './utils/obscura-store'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const obscura = useObscuraStore()
 
-  return (
-    <>
-      <Navbar />
-    </>
-  )
+    obscura.checkToken()
+
+    // const handleTokenChange = (e: any) => {
+    //     setToken(e.target.value)
+    // }
+
+    if (obscura.rootTokenExists === false) {
+        return RootGenerateToken()
+    }
+
+    return (
+        <>
+        <Navbar />
+        </>
+    )
 }
 
 export default App
