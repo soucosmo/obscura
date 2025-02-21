@@ -4,17 +4,15 @@ import { SomethingWentWrong } from './components/something-went-wrong'
 import { RootGenerateToken } from './components/root-generate-token'
 import { RootViewToken } from './components/root-view-token'
 import { useAuthStore } from './utils/auth-store'
+import { Login } from './components/login'
 
 
 function App() {
     const {
         checkRootTokenExists,
         rootTokenExists,
-        token,
-        login,
-        generateRootToken,
-        ready,
         isAuthenticated,
+        rootTokenCreating,
     } = useAuthStore()
 
     if (isAuthenticated) {
@@ -29,22 +27,19 @@ function App() {
         checkRootTokenExists()
     }
 
-    console.log('root app', rootTokenExists)
-
-    if (rootTokenExists == true && !ready) {
-        return RootViewToken(
-            token,
-            (token) => login(token),
-        );
+    if (rootTokenExists == false) {
+        return <RootGenerateToken/>
     }
 
-    if (rootTokenExists == false && !ready) {
-        return RootGenerateToken(
-            generateRootToken
-        );
+    if (rootTokenExists == true && rootTokenCreating) {
+        return <RootViewToken/>
+    }   
+
+    if (!rootTokenCreating) {
+        return <Login/>
     }
 
-    return SomethingWentWrong()
+    return <SomethingWentWrong/>
 }
 
 export default App
