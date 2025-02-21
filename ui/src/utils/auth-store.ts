@@ -32,8 +32,6 @@ export const useAuthStore = create<AuthState>((set, get) => {
                 .then((res) => {
                     const rootTokenExists = res.status == 200
 
-                    console.log(rootTokenExists)
-
                     if (!rootTokenExists) {
                         set({level: 1})
                     } else if (rootTokenExists){
@@ -75,7 +73,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
                         isAuthenticated: true,
                         rootTokenView: false,
                         paths: info.paths,
-                        //level: 10
+                        level: 10
                     })
 
                     toast.success('the token has been successfully verified!')
@@ -86,7 +84,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
                         isAuthenticated: false,
                         rootTokenView: false,
                         paths: [],
-                       // level: 10
+                        level: 10
                     })
 
                     toast.error(res.text())
@@ -99,7 +97,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
                 rootTokenView: false,
                 token: '',
                 paths: [],
-                //level: 3,
+                level: 3,
             })
 
             localStorage.removeItem('token')
@@ -107,5 +105,5 @@ export const useAuthStore = create<AuthState>((set, get) => {
             toast.success('your token has been disconnected')
         },
     };
-  });
+});
   
