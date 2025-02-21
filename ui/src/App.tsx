@@ -1,5 +1,6 @@
 import './App.css'
 import { Navbar } from './components/navbar'
+import { useEffect } from 'react'
 import { SomethingWentWrong } from './components/something-went-wrong'
 import { RootGenerateToken } from './components/root-generate-token'
 import { RootViewToken } from './components/root-view-token'
@@ -10,10 +11,13 @@ import { Login } from './components/login'
 export default function() {
     const {
         checkRootTokenExists,
-        rootTokenExists,
+        level,
         isAuthenticated,
-        rootTokenCreating,
     } = useAuthStore()
+
+    useEffect(() => {
+        checkRootTokenExists()
+    }, [level])
 
     if (isAuthenticated) {
         return (
@@ -23,19 +27,15 @@ export default function() {
         )
     }
 
-    if (rootTokenExists === undefined) {
-        checkRootTokenExists()
-    }
-
-    if (rootTokenExists == false) {
+    if (level == 1) {
         return <RootGenerateToken/>
     }
 
-    if (rootTokenExists == true && rootTokenCreating) {
+    if (level == 2) {
         return <RootViewToken/>
     }   
 
-    if (!rootTokenCreating) {
+    if (level == 3) {
         return <Login/>
     }
 
