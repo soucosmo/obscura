@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify'
-import { API_URL } from "./config"
-import { create } from "zustand"
+import { API_URL } from './config'
+import { create } from 'zustand'
 
 interface AuthState {
-    rootTokenCreating: boolean
-    rootTokenExists?: boolean
+    level: number
     token: string
+    rootTokenView: boolean
     isAuthenticated: boolean
     paths: string[]
     login: (token: string) => void
@@ -14,31 +14,31 @@ interface AuthState {
     checkRootTokenExists: () => void
 }
 
-export const useAuthStore = create<AuthState>((set) => {
-    const token = localStorage.getItem("token") ?? ""
-    const rootTokenCreating = localStorage.getItem('rootTokenCreating') == 'true'
+export const useAuthStore = create<AuthState>((set, get) => {
+    const token = localStorage.getItem('token') ?? ''
 
     return {
-        rootTokenCreating,
-        rootTokenExists: undefined,
+        level: 0,
         token,
+        rootTokenView: false,
         isAuthenticated: !!token,
         paths: [],
         checkRootTokenExists: () => {
+            if (get().level != 0) {
+                return;
+            }
+
             fetch(`${API_URL}/api/token/root-exists`)
                 .then((res) => {
                     const rootTokenExists = res.status == 200
 
-                    let rootTokenCreating = true
+                    console.log(rootTokenExists)
 
-                    if (!rootTokenExists && !localStorage.getItem('rootTokenCreating')) {
-                        localStorage.setItem("rootTokenCreating", "true")
+                    if (!rootTokenExists) {
+                        set({level: 1})
+                    } else if (rootTokenExists){
+                        set({level: 3})
                     }
-
-                    set({
-                        rootTokenExists,
-                        rootTokenCreating,
-                    })
                 })
         },
         generateRootToken: () => {
@@ -53,33 +53,42 @@ export const useAuthStore = create<AuthState>((set) => {
                 }).then((data) => {
                     console.log(data)
                     if (data.status === 201) {
-                        localStorage.setItem("rootTokenCreating", "true")
-
                         set({
-                            rootTokenExists: true,
+                            level: 2,
                             token: data.text,
+                            rootTokenView: true,
                         })
+                    } else {
+                        set({level: 3})
                     }
                 })
         },
         login: async (token) => {
             fetch(`${API_URL}/api/token/${token}`).then(async (res) => {
                 if (res.status == 200) {
-                    localStorage.setItem("token", token)
-
-                    localStorage.setItem("rootTokenCreating", "false")
+                    localStorage.setItem('token', token)
 
                     let info = await res.json()
 
                     set({
                         token,
                         isAuthenticated: true,
+                        rootTokenView: false,
                         paths: info.paths,
-                        rootTokenCreating: false,
+                        //level: 10
                     })
 
                     toast.success('the token has been successfully verified!')
                 } else {
+
+                    set({
+                        token,
+                        isAuthenticated: false,
+                        rootTokenView: false,
+                        paths: [],
+                       // level: 10
+                    })
+
                     toast.error(res.text())
                 }
             })
@@ -87,12 +96,13 @@ export const useAuthStore = create<AuthState>((set) => {
         logout: () => {
             set({
                 isAuthenticated: false,
-                token: "",
+                rootTokenView: false,
+                token: '',
                 paths: [],
-                rootTokenCreating: false,
+                //level: 3,
             })
 
-            localStorage.removeItem("token")
+            localStorage.removeItem('token')
 
             toast.success('your token has been disconnected')
         },
