@@ -1,8 +1,8 @@
 import { useAuthStore } from "../utils/auth-store"
 
 
-export const RootGenerateToken = (generateRootToken: () => void) => {
-    //const {generateRootToken} = useAuthStore()
+export const RootGenerateToken = () => {
+    const {generateRootToken} = useAuthStore()
 
     return (
         <div className="flex justify-center items-center h-screen">
