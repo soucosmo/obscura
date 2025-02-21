@@ -1,4 +1,8 @@
-export const RootViewToken = (token: string, login: (token: string) => void) => {
+import { useAuthStore } from "../utils/auth-store"
+
+export const RootViewToken = () => {
+    const {login, token} = useAuthStore()
+
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-96">
