@@ -7,7 +7,7 @@ import { useAuthStore } from './utils/auth-store'
 import { Login } from './components/login'
 
 
-function App() {
+export default function() {
     const {
         checkRootTokenExists,
         rootTokenExists,
@@ -41,5 +41,3 @@ function App() {
 
     return <SomethingWentWrong/>
 }
-
-export default App
