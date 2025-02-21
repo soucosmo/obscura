@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpServer};
+use std::env::set_var;
 use actix_cors::Cors;
 use std::sync::Arc;
 use fjall::Config;
@@ -10,6 +11,11 @@ mod dao;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    set_var("RUST_LOG", "info");
+    set_var("RUST_BACKTRACE", "1");
+
+    env_logger::init();
+
     let keyspace = Arc::new(
         Config::new(dao::config::DEFAULT_KEYSPACE)
             .open()
