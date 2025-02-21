@@ -33,7 +33,7 @@ export default function() {
 
     if (level == 2) {
         return <RootViewToken/>
-    }   
+    }
 
     if (level == 3) {
         return <Login/>
