@@ -57,7 +57,7 @@ export const useObscuraStore = create<ObscuraState>((set, get) => {
             set({ pathContent })
         },
         saveConfigMap: () => {
-            const path = get().currentPath.substring(1, get().currentPath.length)
+            const path = get().currentPath
 
             fetch(`${API_URL}/api/config-map/${path}`, {
                 method: 'put',
