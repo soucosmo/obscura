@@ -1,5 +1,6 @@
 import { useObscuraStore } from "../utils/obscura-store"
 import { ConfigMapsEdit } from "./config-maps-edit"
+import { useDebounce } from "./debounce"
 import { Layout } from "../layout"
 import { useEffect } from "react"
 
@@ -13,15 +14,18 @@ export const ConfigMaps = () => {
         pathContent,
         pathEditing,
         setPathEditing,
+        getPath,
     } = useObscuraStore()
 
+    const debouncedPath = useDebounce(currentPath, 500)
+
     useEffect(() => {
-        if (currentPath.length === 0) {
-            getPathsWithPrefix('*')
+        if (debouncedPath.length === 0) {
+            getPathsWithPrefix('*');
         } else {
-            getPathsWithPrefix(currentPath.substring(1, currentPath.length))
+            getPathsWithPrefix(getPath());
         }
-    }, [currentPath])
+    }, [debouncedPath])
 
     const pathsPrefix = Object.entries(pathWithPrefix)
 
