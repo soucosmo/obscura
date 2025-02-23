@@ -4,17 +4,6 @@ import { useDebounce } from "./debounce"
 import { Layout } from "../layout"
 import { useEffect } from "react"
 
-const data = [
-    { name: 'Ana', age: 25, city: 'São Paulo' },
-    { name: 'Bruno', age: 30, city: 'Rio de Janeiro' },
-    { name: 'Carlos', age: 28, city: 'Belo Horizonte' },
-    { name: 'Daniela', age: 22, city: 'Curitiba' },
-    { name: 'Eduardo', age: 35, city: 'Porto Alegre' },
-    { name: 'Fernanda', age: 27, city: 'Salvador' },
-    { name: 'Gabriel', age: 29, city: 'Brasília' },
-    { name: 'Helena', age: 26, city: 'Fortaleza' },
-];
-
 export const ConfigMaps = () => {
     const {
         pathWithPrefix,
