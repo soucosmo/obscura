@@ -10,12 +10,12 @@ export const useConfigMapsDelete = () => {
 
     const showDeleteAlert = () => {
         _ConfigMapsDelete.fire({
-            title: 'Tem certeza?',
-            text: 'Você não poderá reverter essa ação!',
+            title: 'He is sure?',
+            text: 'You will not be able to reverse this action!',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sim, deletar!',
-            cancelButtonText: 'Cancelar'
+            confirmButtonText: 'Yes, delete!',
+            cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteConfigMap()

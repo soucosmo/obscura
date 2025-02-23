@@ -3,7 +3,7 @@ import { Camera, Github } from 'lucide-react';
 
 export const Footer = () => {
     return (
-        <footer className="footer bg-neutral text-neutral-content p-10">
+        <footer className="footer bg-base-200 rounded-lg p-10">
             <aside>
                 <Camera size={50} />
                 <p className='text-2xl'>Obscura</p>

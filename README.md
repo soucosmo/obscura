@@ -26,6 +26,10 @@ The correct pronunciation of **Obscura** is:
 
 - 📡 **Secure APIs** for credential retrieval and management.
 
+## Demo
+![Obscura-Demo](https://github.com/user-attachments/assets/4da06d38-9a26-48a2-a1e0-65d9c08e14e5)
+
+
 ## 📦 Installation
 
 ### Requirements

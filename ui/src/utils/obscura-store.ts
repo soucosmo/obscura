@@ -17,6 +17,7 @@ interface ObscuraState {
     pathEditing: boolean
     setPathEditing: (pathEditing: boolean) => void
     navigateToConfigMaps: () => void
+    getPath: () => string
 }
 
 export const useObscuraStore = create<ObscuraState>((set, get) => {
@@ -56,8 +57,19 @@ export const useObscuraStore = create<ObscuraState>((set, get) => {
         setPathContent: (pathContent: object) => {
             set({ pathContent })
         },
+        getPath() {
+            let path = get().currentPath
+
+            path = path.replace('//', '/')
+
+            if (path.startsWith('/')) {
+                path = path.substring(1, path.length)
+            }
+
+            return path
+        },
         saveConfigMap: () => {
-            const path = get().currentPath.substring(1, get().currentPath.length)
+            let path = get().getPath()
 
             fetch(`${API_URL}/api/config-map/${path}`, {
                 method: 'put',
