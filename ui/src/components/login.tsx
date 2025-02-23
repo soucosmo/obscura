@@ -7,7 +7,7 @@ export const Login = () => {
     const {login} = useAuthStore()
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center min-h-[85vh]">
             <div className="w-96">
                 <h1 className="text-5xl font-bold text-center mb-4">Obscura</h1>
                 <p className="text-center mb-4">Enter your token below to connect</p>

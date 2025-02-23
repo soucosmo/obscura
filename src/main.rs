@@ -1,5 +1,5 @@
 use actix_web::{web, App, HttpServer};
-use std::env::set_var;
+use std::env::{set_var, var};
 use actix_cors::Cors;
 use std::sync::Arc;
 use fjall::Config;
@@ -16,8 +16,22 @@ async fn main() -> std::io::Result<()> {
 
     env_logger::init();
 
+    let host = var("OBSCURA_HOST").unwrap_or(
+        dao::config::DEFAULT_HOST.to_string()
+    );
+
+    let port = var("OBSCURA_PORT").unwrap_or(
+        dao::config::DEFAULT_PORT.to_string()
+    );
+
+    let path = var("OBSCURA_PATH").unwrap_or(
+        dao::config::DEFAULT_KEYSPACE.to_string()
+    );
+
     let keyspace = Arc::new(
-        Config::new(dao::config::DEFAULT_KEYSPACE)
+        Config::new(
+                format!("{}/.obscura", path)
+            )
             .open()
             .expect("keyspace load")
     );
@@ -48,7 +62,7 @@ async fn main() -> std::io::Result<()> {
                     .service(http::token::write::write)
             )
     })
-    .bind((dao::config::DEFAULT_HOST, dao::config::DEFAULT_PORT))?
+    .bind((host, port.parse().unwrap()))?
     .run()
     .await
 }

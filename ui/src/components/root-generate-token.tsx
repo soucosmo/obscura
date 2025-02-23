@@ -5,7 +5,7 @@ export const RootGenerateToken = () => {
     const {generateRootToken} = useAuthStore()
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center min-h-[85vh]">
             <div className="w-96">
                 <h1 className="text-5xl font-bold text-center mb-4">Obscura</h1>
                 <p className="border-[1px] py-4 rounded text-center mb-4 ">The ROOT token has not yet been created, it is required for the first access and you can generate new tokens from it</p>
