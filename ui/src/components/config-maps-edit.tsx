@@ -1,6 +1,7 @@
+import { useConfigMapsDelete } from './config-maps-delete'
 import { useObscuraStore } from "../utils/obscura-store"
-import Editor from '@monaco-editor/react'
 import { useState, useEffect } from "react"
+import Editor from '@monaco-editor/react'
 
 export const ConfigMapsEdit = () => {
     const {
@@ -10,21 +11,24 @@ export const ConfigMapsEdit = () => {
         pathContent,
     } = useObscuraStore()
 
-    const [json, setJson] = useState('{}');
+    const deleteConfigMap = useConfigMapsDelete()
 
-    const [error, setError] = useState('');
+    const [json, setJson] = useState('{}')
+
+    const [error, setError] = useState('')
 
     useEffect(() => {
         setJson(JSON.stringify(pathContent, null, 2))
     }, [pathContent])
 
     const handleChange = (value: any) => {
-        setJson(value || '');
+        setJson(value || '')
+
         try {
-            JSON.parse(value || '{}');
+            JSON.parse(value || '{}')
             setError('');
         } catch {
-            setError('JSON inválido!');
+            setError('JSON inválido!')
         }
     }
 
@@ -52,6 +56,9 @@ export const ConfigMapsEdit = () => {
                 <button
                     className="btn btn-neutral"
                     onClick={navigateToConfigMaps}>Back</button>
+                <button
+                    className="btn btn-error"
+                    onClick={deleteConfigMap}>Delete</button>
                 { error === '' && json !== '{}' && json.length > 0 && (
                 <button
                     className="btn btn-primary"

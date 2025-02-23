@@ -13,6 +13,7 @@ interface ObscuraState {
     pathContent: object
     setPathContent: (pathContent: object) => void
     saveConfigMap: () => void
+    deleteConfigMap: () => void
     pathEditing: boolean
     setPathEditing: (pathEditing: boolean) => void
     navigateToConfigMaps: () => void
@@ -68,6 +69,24 @@ export const useObscuraStore = create<ObscuraState>((set, get) => {
             }).then(async (res) => {
                 if (res.status == 200) {
                     toast.success('The config map has been successfully saved!')
+                } else {
+                    toast.error(await res.text())
+                }
+            })
+        },
+        deleteConfigMap: () => {
+            const path = get().currentPath.substring(1, get().currentPath.length)
+
+            fetch(`${API_URL}/api/config-map/${path}`, {
+                method: 'delete',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(async (res) => {
+                if (res.status == 200) {
+                    toast.success('The config map has been successfully deleted!')
+
+                    get().navigateToConfigMaps()
                 } else {
                     toast.error(await res.text())
                 }
