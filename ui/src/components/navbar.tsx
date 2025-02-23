@@ -1,8 +1,10 @@
+import { useObscuraStore } from "../utils/obscura-store"
 import { useAuthStore } from "../utils/auth-store"
-
+import { Camera } from "lucide-react"
 
 export const Navbar = () => {
     const auth = useAuthStore()
+    const { navigateToConfigMaps } = useObscuraStore()
 
     return (
         <div className="navbar bg-base-100">
@@ -25,20 +27,20 @@ export const Navbar = () => {
                 <ul
                     tabIndex={0}
                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li><a>ConfigMaps</a></li>
-                    <li><a>Tokens</a></li>
+                    {/*<li><a onClick={navigateToConfigMaps}>ConfigMaps</a></li>*/}
                 </ul>
                 </div>
-                <button className="btn btn-ghost text-xl">Obscura</button>
+                <div className="flex items-center gap-2 cursor-pointer" onClick={navigateToConfigMaps}>
+                    <Camera size={40} /> <span className="text-2xl font-bold">Obscura</span>
+                </div>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            {/*<div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>ConfigMaps</a></li>
-                    <li><a>Tokens</a></li>
+                    <li><a onClick={navigateToConfigMaps}>ConfigMaps</a></li>
                 </ul>
-            </div>
+            </div>*/}
             <div className="navbar-end">
-                <a className="btn text-red-100" onClick={auth.logout}>Disconnect</a>
+                <a className="text-red-500 cursor-pointer" onClick={auth.logout}>Disconnect</a>
             </div>
         </div>
     )
