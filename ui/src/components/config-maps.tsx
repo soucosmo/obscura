@@ -4,6 +4,17 @@ import { useDebounce } from "./debounce"
 import { Layout } from "../layout"
 import { useEffect } from "react"
 
+const data = [
+    { name: 'Ana', age: 25, city: 'São Paulo' },
+    { name: 'Bruno', age: 30, city: 'Rio de Janeiro' },
+    { name: 'Carlos', age: 28, city: 'Belo Horizonte' },
+    { name: 'Daniela', age: 22, city: 'Curitiba' },
+    { name: 'Eduardo', age: 35, city: 'Porto Alegre' },
+    { name: 'Fernanda', age: 27, city: 'Salvador' },
+    { name: 'Gabriel', age: 29, city: 'Brasília' },
+    { name: 'Helena', age: 26, city: 'Fortaleza' },
+];
+
 export const ConfigMaps = () => {
     const {
         pathWithPrefix,
@@ -17,7 +28,7 @@ export const ConfigMaps = () => {
         getPath,
     } = useObscuraStore()
 
-    const debouncedPath = useDebounce(currentPath, 500)
+    const debouncedPath = useDebounce(currentPath, 400)
 
     useEffect(() => {
         if (debouncedPath.length === 0) {
@@ -45,29 +56,33 @@ export const ConfigMaps = () => {
                 <ConfigMapsEdit/>
             )}
             {pathsPrefix.length > 0 && pathContent && pathEditing === false && (
-                <table className="table w-full">
-                    <thead>
-                        <tr>
-                            <th>Path</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { pathsPrefix.map(i => {
-                            const path = i[0]
-                            const { content } = i[1]
-
-                            return (
-                                <tr className="cursor-pointer" key={path} onClick={() => {
-                                    setCurrentPath(path)
-                                    setPathEditing(true)
-                                    setPathContent(content)
-                                }}>
-                                    <td>{i[0]}</td>
+                <div className=" mx-auto my-8 rounded-lg shadow-md overflow-hidden">
+                    <div className="max-h-[50vh] overflow-y-auto">
+                        <table className="table w-full table-fixed">
+                            <thead className="sticky top-0 bg-base-100">
+                                <tr>
+                                    <th className="p-3 text-lg">Path</th>
                                 </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                { pathsPrefix.map(i => {
+                                    const path = i[0]
+                                    const { content } = i[1]
+                                    
+                                    return (
+                                        <tr className="cursor-pointer" key={path} onClick={() => {
+                                            setCurrentPath(path)
+                                            setPathEditing(true)
+                                            setPathContent(content)
+                                        }}>
+                                            <td className="p-3">{path}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             )}
         </Layout>
     )
