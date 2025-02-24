@@ -1,5 +1,6 @@
 use actix_web::{web, App, HttpServer};
 use std::env::{set_var, var};
+use std::env::home_dir;
 use actix_cors::Cors;
 use std::sync::Arc;
 use fjall::Config;
@@ -9,12 +10,14 @@ mod http;
 mod dto;
 mod dao;
 
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     set_var("RUST_LOG", "info");
     set_var("RUST_BACKTRACE", "1");
 
     env_logger::init();
+
 
     let host = var("OBSCURA_HOST").unwrap_or(
         dao::config::DEFAULT_HOST.to_string()
@@ -25,12 +28,16 @@ async fn main() -> std::io::Result<()> {
     );
 
     let path = var("OBSCURA_PATH").unwrap_or(
-        dao::config::DEFAULT_KEYSPACE.to_string()
+        home_dir().unwrap().display().to_string()
     );
 
     let keyspace = Arc::new(
         Config::new(
-                format!("{}/.obscura", path)
+                format!(
+                    "{}/{}",
+                    path,
+                    dao::config::DEFAULT_KEYSPACE,
+                ),
             )
             .open()
             .expect("keyspace load")
@@ -49,6 +56,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Cors::permissive())
             .app_data(app_state.clone())
+            .service(http::serve_embedded::serve_embedded)
             .service(
                 web::scope(dao::config::PREFIX_API)
                     .service(http::ping::ping)
