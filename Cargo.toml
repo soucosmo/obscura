@@ -5,11 +5,14 @@ edition = "2021"
 
 [dependencies]
 actix-cors = "0.7.0"
+actix-files = "0.6.6"
 actix-web = "4.9.0"
 chrono = { version = "0.4.39", features = ["serde"] }
 env_logger = "0.11.6"
 fjall = "2.6.3"
+include_dir = "0.7.4"
 log = "0.4.25"
+mime_guess = "2.0.5"
 regex = "1.11.1"
 serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.138"
