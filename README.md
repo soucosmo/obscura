@@ -30,8 +30,65 @@ The correct pronunciation of **Obscura** is:
 ![ObscuraFullHD](https://github.com/user-attachments/assets/54392804-fcbe-43f8-9570-2256690877e1)
 
 
+# Docker Usage Guide
 
-## 📦 Installation
+This guide explains how to run the project using Docker.
+
+## Prerequisites
+- **Docker:** Ensure Docker is installed and running. [Get Docker](https://docs.docker.com/get-docker/)
+- **Project Image:** The Docker image `obscura` must be available locally.
+
+## Running the Container
+To start the container, use the following command:
+
+```bash
+docker run --name obscura --restart=always -d -v obscura_data:/root/.obscura -e OBSCURA_HOST="0.0.0.0" -p 9797:9797 soucosmo/obscura
+```
+
+### Command Breakdown
+- **`--name`**: Sets the container name
+- **`--restart=always`**: Causes the container to restart if the binary stops, this is recommended to ensure high availability 
+- **`-d`**: Runs the container in the background.
+- **`-v obscura_data:/root/.obscura`**: Mounts a persistent volume named `obscura_data`.
+- **`-e OBSCURA_HOST="0.0.0.0"`**: Sets the environment variable to make the service accessible.
+- **`-p 9797:9797`**: Maps port 9797 of the host to port 9797 of the container.
+- **`soucosmo/obscura`**: The name of the Docker image.
+
+## Accessing the Service
+Once the container is running, access the service at:
+
+```plaintext
+http://localhost:9797
+```
+
+Replace `localhost` with your server's IP address if running remotely.
+
+## Managing the Container
+- **View running containers:**
+  ```bash
+  docker ps
+  ```
+
+- **Stop the container:**
+  ```bash
+  docker stop obscura
+  ```
+
+- **Remove the container:**
+  ```bash
+  docker rm obscura
+  ```
+
+- **Remove the volume:**
+  ```bash
+  docker volume rm obscura_data
+  ```
+
+---
+
+For more information, refer to the [Docker documentation](https://docs.docker.com/).
+
+## 📦 Build from source
 
 ### Requirements
 - Rust
