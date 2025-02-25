@@ -84,16 +84,24 @@ Replace `localhost` with your server's IP address if running remotely.
   ```bash
   docker volume rm obscura_data
   ```
+For more information, refer to the [Docker documentation](https://docs.docker.com/).
 
 ---
 
-For more information, refer to the [Docker documentation](https://docs.docker.com/).
+## Client Libraries
+| Language | Documentation |
+| --- | --- |
+| Rust | [obscura-rust](https://github.com/soucosmo/obscura-rust) |
+
+
+---
 
 ## 📦 Build from source
 
 ### Requirements
 - Rust
 - Cargo
+- Node.js
 
 ### Steps
 
@@ -102,6 +110,12 @@ For more information, refer to the [Docker documentation](https://docs.docker.co
 ```sh
 git clone https://github.com/soucosmo/obscura.git
 
-cd obscura
+cd obscura/ui
 
+## build the ui
+npm run build
+
+cd ../
+
+## build the binary
 cargo run
