@@ -9,7 +9,6 @@ import { Login } from './components/login'
 import { ConfigMaps } from './components/config-maps'
 
 
-
 export default function() {
     const {
         checkRootTokenExists,

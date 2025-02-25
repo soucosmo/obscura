@@ -18,7 +18,6 @@ async fn main() -> std::io::Result<()> {
 
     env_logger::init();
 
-
     let host = var("OBSCURA_HOST").unwrap_or(
         dao::config::DEFAULT_HOST.to_string()
     );
@@ -56,19 +55,19 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Cors::permissive())
             .app_data(app_state.clone())
-            .service(http::serve_embedded::serve_embedded)
             .service(
                 web::scope(dao::config::PREFIX_API)
-                    .service(http::ping::ping)
-                    .service(http::config_map::read_prefix::read_prefix)
-                    .service(http::config_map::read::read)
-                    .service(http::config_map::write::write)
-                    .service(http::config_map::remove::remove)
-                    .service(http::token::root_exists::root_exists)
-                    .service(http::token::read::read)
-                    .service(http::token::root_generate::root_generate)
-                    .service(http::token::write::write)
+                .service(http::ping::ping)
+                .service(http::config_map::read_prefix::read_prefix)
+                .service(http::config_map::read::read)
+                .service(http::config_map::write::write)
+                .service(http::config_map::remove::remove)
+                .service(http::token::root_exists::root_exists)
+                .service(http::token::read::read)
+                .service(http::token::root_generate::root_generate)
+                .service(http::token::write::write)
             )
+            .service(http::serve_embedded::serve_embedded)
     })
     .bind((host, port.parse().unwrap()))?
     .run()

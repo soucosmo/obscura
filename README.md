@@ -42,14 +42,15 @@ This guide explains how to run the project using Docker.
 To start the container, use the following command:
 
 ```bash
-docker run --name obscura --restart=always -d -v obscura_data:/root/.obscura -e OBSCURA_HOST="0.0.0.0" -p 9797:9797 soucosmo/obscura
+docker run --name obscura --restart=always -d -v obscura_data:/opt/.obscura -e OBSCURA_PATH="/opt" -e OBSCURA_HOST="0.0.0.0" -p 9797:9797 soucosmo/obscura
 ```
 
 ### Command Breakdown
 - **`--name`**: Sets the container name
 - **`--restart=always`**: Causes the container to restart if the binary stops, this is recommended to ensure high availability 
 - **`-d`**: Runs the container in the background.
-- **`-v obscura_data:/root/.obscura`**: Mounts a persistent volume named `obscura_data`.
+- **`-v obscura_data:/opt/.obscura`**: Mounts a persistent volume named `obscura_data`.
+- **`-e OBSCURA_PATH="/opt"`**: Sets the storage path, by default it is the user folder.
 - **`-e OBSCURA_HOST="0.0.0.0"`**: Sets the environment variable to make the service accessible.
 - **`-p 9797:9797`**: Maps port 9797 of the host to port 9797 of the container.
 - **`soucosmo/obscura`**: The name of the Docker image.
