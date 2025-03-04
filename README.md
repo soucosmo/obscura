@@ -92,6 +92,7 @@ For more information, refer to the [Docker documentation](https://docs.docker.co
 | Language | Documentation |
 | --- | --- |
 | Rust | [obscura-rust](https://github.com/soucosmo/obscura-rust) |
+| Python | [obscura-python](https://github.com/soucosmo/obscura-python) |
 
 
 ---
