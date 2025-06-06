@@ -11,7 +11,7 @@ RUN npm run build
 
 
 
-FROM rust:1.85.0 AS builder
+FROM rust:1.87.0 AS builder
 
 COPY . /app
 
