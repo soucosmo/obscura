@@ -1,9 +1,11 @@
+use super::super::token::http_response::http_response as token_http_response;
 use crate::dao::{AppState, ConfigMap};
 use crate::services::path_sanitize;
 use serde_json::Value;
 use chrono::Utc;
 use actix_web::{
     HttpResponse,
+    HttpRequest,
     Responder,
     put,
     web::{
@@ -14,7 +16,7 @@ use actix_web::{
 };
 
 #[put("/config-map/{path:.*}")]
-pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>) -> impl Responder {
+pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppState>, req: HttpRequest) -> impl Responder {
     let config_path = path_sanitize(path);
 
     if let Err(e) = config_path {
@@ -22,7 +24,16 @@ pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppSta
     }
 
     let config_path = config_path.unwrap();
-    
+
+    if let Err(e) = token_http_response(
+        config_path.as_str(),
+        true,
+        &app_state,
+        req
+    ).await {
+        return e;
+    }
+
     let body = body.into_inner();
 
     let config_map = ConfigMap {
@@ -45,4 +56,3 @@ pub async fn write(path: Path<String>, body: Json<Value>, app_state: Data<AppSta
         }
     }
 }
-
